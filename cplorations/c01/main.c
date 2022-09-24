@@ -1,8 +1,8 @@
 /****************************************
  * C-ploration 1 for CS 271
  * 
- * [NAME] $YOUR_NAME$
- * [TERM] FALL $YEAR$
+ * [NAME] Micah Stalberg
+ * [TERM] FALL 2022
  * 
  ****************************************/
 
@@ -24,6 +24,13 @@
 int add(int n)
 {
     /** Your CODE here **/
+    int sum = 0;
+    int i;
+    for (i = 1; i <= n; i++)
+    {
+        sum += i;
+    }
+    return sum;
 }   
 
 
