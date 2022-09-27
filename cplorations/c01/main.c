@@ -72,7 +72,16 @@ int fib(int n)
  */
 int max(int arr[], int n)
 {
-    /** Your CODE here **/
+    int max = arr[0];
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        if (arr[i] > max)
+        {
+            max = arr[i];
+        }
+    }
+    return max;
 }
 
 /* Function: sum
