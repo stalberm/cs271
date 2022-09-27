@@ -96,7 +96,13 @@ int max(int arr[], int n)
  */
 int sum(int arr[], int n)
 {
-    /** Your CODE here **/
+    int sum = 0;
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        sum = sum + arr[i];
+    }
+    return sum;
 }
 
 
@@ -112,7 +118,12 @@ int sum(int arr[], int n)
  *
  */
 double pie(long int n){
-    /** Your CODE here **/
+    if (n == 0)
+    {
+        return 0;
+    } else {
+        return 4*pow(-1, (n+1)) * 1/(double)(2*n-1) + pie(n-1);
+    }
 } 
 
 
