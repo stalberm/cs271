@@ -75,12 +75,13 @@ char *welcome(char* hello, char* name) {
  */
 void reverse(char* txt, char* result) {
 
-	int len = length(txt);
-    int resultEndi = len - 1;
-    for (int i = 0; i < len; ++i) {
-    	result[resultEndi] = txt[i];
-    	resultEndi --;
-  }
+    int len = length(txt);
+    int j = len - 1;
+    for (int i = 0; i < len; i++) {
+        result[i] = txt[j];
+        j--;
+    }
+    result[len] = '\0';
 }
 
 
@@ -93,10 +94,16 @@ void reverse(char* txt, char* result) {
  *
  * returns: integer count of vowels
  */
-int vowels(char* txt) {
+int vowels(char *txt) {
 	int vowel = 0;
 
-	/* REPLACE WITH YOUR CODE */
+	int len = length(txt);
+	char *vowels = "aeiouAEIOU";
+	for (int i = 0; i < len; ++i) {
+		if (strchr(vowels, txt[i]) != NULL) {
+			vowel++;
+    	}
+	}
 
 	return vowel;
 }
