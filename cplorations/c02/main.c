@@ -58,7 +58,7 @@ char *welcome(char* hello, char* name) {
   	strcat(message, " ");
   	strcat(message, name);
   	strcat(message, "!");
-	
+
 	return message;	
 }
 
@@ -75,8 +75,12 @@ char *welcome(char* hello, char* name) {
  */
 void reverse(char* txt, char* result) {
 
-	/* REPLACE WITH YOUR CODE */
-	
+	int len = length(txt);
+    int resultEndi = len - 1;
+    for (int i = 0; i < len; ++i) {
+    	result[resultEndi] = txt[i];
+    	resultEndi --;
+  }
 }
 
 
