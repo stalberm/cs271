@@ -125,9 +125,25 @@ int vowels(char *txt) {
  */
 int quartile(char* name) {
 
-	/* REPLACE WITH YOUR CODE */
-	
-	return -1; // <==fix!
+	char *q1 = "ABCDEF";
+	char *q2 = "GHIJKL";
+	char *q3 = "MNOPQR";
+	char *q4 = "STUVQXYZ";
+	if (strchr(q1, name[0]) != NULL)
+	{
+		return 1;
+    } else if (strchr(q2, name[0]) != NULL)
+	{
+		return 2;
+	} else if (strchr(q3, name[0]) != NULL)
+	{
+		return 3;
+	} else if (strchr(q4, name[0]) != NULL)
+	{
+		return 4;
+	// Just a catch all return if first char isn't a letter	
+	} else { return -1; }
+		
 }
 
 
