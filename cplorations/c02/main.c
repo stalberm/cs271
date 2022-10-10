@@ -124,26 +124,18 @@ int vowels(char *txt) {
  * returns: integer quarter [1..4]
  */
 int quartile(char* name) {
-
-	char *q1 = "ABCDEF";
-	char *q2 = "GHIJKL";
-	char *q3 = "MNOPQR";
-	char *q4 = "STUVQXYZ";
-	if (strchr(q1, name[0]) != NULL)
+  *name = toupper(*name);
+	if (strcmp("A", name) <= 0 && strcmp("G", name) > 0)
 	{
 		return 1;
-    } else if (strchr(q2, name[0]) != NULL)
+	} else if (strcmp("G", name) <= 0 && strcmp("M", name) > 0)
 	{
 		return 2;
-	} else if (strchr(q3, name[0]) != NULL)
+	} else if (strcmp("M", name) <= 0 && strcmp("S", name) > 0)
 	{
 		return 3;
-	} else if (strchr(q4, name[0]) != NULL)
-	{
-		return 4;
-	// Just a catch all return if first char isn't a letter	
-	} else { return -1; }
-		
+	}
+  return 4;
 }
 
 
