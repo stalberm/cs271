@@ -42,23 +42,26 @@ CHIP ALU {
         ng; // 1 if (out < 0),  0 otherwise
 
     PARTS:
-   // Put you code here:
-   // if (zx == 1) set x = 0 & if (zy == 1) set y = 0
-   Mux16(a=x, b[0..15] = false, sel=zx, out=p1x);
-   Mux16(a=y, b[0..15] = false, sel=zy, out=p1y);
-
-   // if (nx == 1) set x = !x & if (ny == 1) set x = !y
-   Not16(in=p1x,out=notp1x);
-   Not16(in=p1y,out=notp1y);
-   Mux16(a=p1x, b=notp1x, sel=nx, out=p2x);
-   Mux16(a=p1y, b=notp1y, sel=ny, out=p2y);
-
-   // if (f == 1)  set out = x + y & if (f == 0)  set out = x & y
-   And16(a=p2x,b=p2y,out=xandy);
-   Add16(a=p2x, b=p2y, out=xplusy);
-   Mux16(a=xandy, b=xplusy, sel=f, out=pout);
-
-   // if (no == 1) set out = !out
-   Not16(in=pout, out=nout);
-   Mux16(a=pout, b=nout, sel=no, out=out);
+    // Put you code here:
+    // if (zx == 1) set x = 0 & if (zy == 1) set y = 0
+    Mux16(a=x, b[0..15] = false, sel=zx, out=p1x);
+    Mux16(a=y, b[0..15] = false, sel=zy, out=p1y);  
+    // if (nx == 1) set x = !x & if (ny == 1) set x = !y
+    Not16(in=p1x,out=notp1x);
+    Not16(in=p1y,out=notp1y);
+    Mux16(a=p1x, b=notp1x, sel=nx, out=p2x);
+    Mux16(a=p1y, b=notp1y, sel=ny, out=p2y);    
+    // if (f == 1)  set out = x + y & if (f == 0)  set out = x & y
+    And16(a=p2x,b=p2y,out=xandy);
+    Add16(a=p2x, b=p2y, out=xplusy);
+    Mux16(a=xandy, b=xplusy, sel=f, out=pout);  
+    // if (no == 1) set out = !out
+    // 1 if (out < 0),  0 otherwise 
+    Not16(in=pout, out=nout);
+    Mux16(a=pout, b=nout, sel=no, out=out, out[15]=ng, out[0..7]=z1, out[8..15]=z2); //If out[15], most sig bit is 1 in 2s comp, its negative. 
+    // 1 if (out == 0), 0 otherwise
+    Or8Way(in=z1, out=zout1);
+    Or8Way(in=z2, out=zout2);
+    Or(a=zout1, b=zout2, out=zout);
+    Not(in=zout, out=zr);
 }
