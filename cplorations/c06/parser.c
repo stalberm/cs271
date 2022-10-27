@@ -62,7 +62,7 @@ void parse(FILE * file){
         }
         else if (is_label(line)) {
             inst_type = 'L';
-            char extr_label[MAX_LINE_LENGTH];
+            char extr_label[MAX_LABEL_LENGTH];
             extract_label(line, extr_label);
             printf("%c  %s\n", inst_type, extr_label);
             continue;
