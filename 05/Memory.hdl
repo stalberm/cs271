@@ -27,5 +27,18 @@ CHIP Memory {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    
+    // If sel = 11 - 110 0000 0000 0000   24576
+    // If sel = 10 - 100 0000 0000 0000   16384
+    // If sel = 01 - 010 0000 0000 0000   8192
+    // If sel = 00 - 000 0000 0000 0000   0
+
+    DMux4Way(in=load, sel=address[13..14], a=loadR1, b=loadR2, c=loadS, d=loadK);
+    Or(a=loadR1, b=loadR2, out=loadR);
+
+    RAM16K(in=in, load=loadR, address=address[0..13], out=ramOut);
+    Screen(in=in, load=loadS, address=address[0..12], out=screenOut);
+    Keyboard(out=keyboardOut);
+
+    Mux4Way16(a=ramOut, b=ramOut, c=screenOut, d=keyboardOut, sel=address[13..14], out=out);
 }
