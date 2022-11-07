@@ -39,5 +39,38 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    // Put your code here:
+    
+    //If instruction[15] is 0, A type instr and we don't want any jump bits or ALU outputs to be true so output false
+    Mux16(a=false, b=instruction, sel=instruction[15],
+    out[0]=j3, out[1]=j2, out[2]=j1,
+    out[3]=d3, out[3]=writeM, out[4]=d2, out[5]=d1,
+    out[6]=c6, out[7]=c5, out[8]=c4, out[9]=c3, out[10]=c2, out[11]=c1,
+    out[12]=a,
+    out[15]=insType);
+
+    // If C instr, use ALU output, if A then use the instruction input
+    Mux16(a=instruction, b=ALUOut, sel=insType, out=insMuxALU);
+
+    // If C instruction and a (instruction[12]) is 0, A reg, else M reg
+    Mux16(a=ARegOut, b=inM, sel=a, out=AmuxM);
+
+    // Load A if instruction type is A or if C instruction destination includes A (6th bit true)
+    Not(in=insType, out=AType);
+    Or(a=AType, b=d1, out=loadA);
+
+    ARegister(in=insMuxALU, load=loadA, out[0..14]=addressM, out=ARegOut);
+    DRegister(in=ALUOut, load=d2, out=DRegOut);
+    
+    ALU(x=DRegOut, y=AmuxM, zx=c1, nx=c2, zy=c3, ny=c4, f=c5, no=c6, out=ALUOut, out=outM, zr=ALUzr, ng=ALUng);
+
+    And(a=ALUng, b=j1, out=JLT);
+    And(a=ALUzr, b=j2, out=JEQ);
+    Or(a=ALUzr, b=ALUng, out=ZrOrNg);
+    Not(in=ZrOrNg, out=Pos);
+    And(a=Pos, b=j3, out=JGT);
+
+    Or(a=JEQ, b=JLT, out=JLE);
+    Or(a=JLE, b=JGT, out=jump);
+    PC(in=ARegOut, load=jump, inc=true, reset=reset, out[0..14]=pc);
+    
 }
