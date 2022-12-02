@@ -1,5 +1,5 @@
 /****************************************
- * C-ploration 9 for CS 271
+ * C-ploration 10 for CS 271
  * 
  * [NAME] Micah Stalberg
  * [TERM] FALL 2022
@@ -103,8 +103,8 @@ int parse(FILE * file, instruction *instructions){
         else if (is_Ctype(line)) {
             // inst_type = 'C';
             // instr_num++;
-            // char tmp_line[MAX_LINE_LENGTH] = {0};
-            char *tmp_line = malloc(MAX_LINE_LENGTH);
+            char tmp_line[MAX_LINE_LENGTH] = {0};
+            // char *tmp_line = malloc(MAX_LINE_LENGTH);
             strcpy(tmp_line, line);
             // printf("%s\n", line);
 
@@ -179,7 +179,7 @@ bool parse_A_instruction(const char *line, a_instruction *instr) {
     
     if (strcmp(s, s_end) == 0) {
         
-        instr->label = (char*) malloc(strlen(line+1));
+        instr->label = (char*) malloc(strlen(line));
         strcpy(instr->label, s);
         instr->is_addr = false;
     } else if (*s_end != 0) {

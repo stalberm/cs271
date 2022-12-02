@@ -1,3 +1,6 @@
+#ifndef __HACK_H__
+#define __HACK_H__
+
 #include <string.h>
 #include <stdint.h>
 
@@ -250,3 +253,5 @@ static inline comp_id str_to_compid(const char *s, int *a) {
     }
     return id;
 }
+
+#endif
