@@ -232,7 +232,7 @@ void assemble(const char * file_name, instruction* instructions, int num_instruc
                 if (label == NULL) {
                     code = new_addr;
                     symtable_insert(instr.a_instruct.label, new_addr++);
-                    printf("NEW %s\n", instr.a_instruct.label);
+                    // printf("NEW %s\n", instr.a_instruct.label);
                 } else {
                     // printf("LABEL %s\n", instr.a_instruct.label);
                     code = label->address;
