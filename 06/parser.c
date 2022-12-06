@@ -80,9 +80,9 @@ int parse(FILE * file, instruction *instructions){
             instr.instr_type = A_TYPE;
             
             if (instr.a_instruct.is_addr) {
-                printf("A: %d\n", instr.a_instruct.address);
+                printf("A address: %d\n", instr.a_instruct.address);
             } else {
-                printf("A: %s\n", instr.a_instruct.label);
+                printf("A label: %s\n", instr.a_instruct.label);
             }
             
         }
@@ -125,7 +125,6 @@ int parse(FILE * file, instruction *instructions){
             printf("C: d=%d, c=%d, j=%d\n", instr.c_instruct.dest, instr.c_instruct.comp, instr.c_instruct.jump);
         }
 
-        
         instructions[instr_num++] = instr;
         // printf("%u: %d  %s\n", instr_num, instr.instr_type, line);
         // fflush(stdout);
@@ -229,13 +228,13 @@ void assemble(const char * file_name, instruction* instructions, int num_instruc
                 code = instr.a_instruct.address;
             } else {
                 //is A type label
-                // printf("LABEL %s\n", instr.a_instruct.label);
                 Symbol *label = symtable_find(instr.a_instruct.label);
                 if (label == NULL) {
+                    code = new_addr;
                     symtable_insert(instr.a_instruct.label, new_addr++);
-                    // printf("NEW %s\n", instr.a_instruct.label);
-                    code = instr.a_instruct.address;
+                    printf("NEW %s\n", instr.a_instruct.label);
                 } else {
+                    // printf("LABEL %s\n", instr.a_instruct.label);
                     code = label->address;
                     // printf("FOUND %s\n", instr.a_instruct.label);
                 }
@@ -243,7 +242,7 @@ void assemble(const char * file_name, instruction* instructions, int num_instruc
         } else {
             code = instruction_to_opcode(instr.c_instruct);
         }
-        // fprintf(hack_ptr, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(code));
+        fprintf(hack_ptr, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(code));
     }
     
     fclose(hack_ptr);
